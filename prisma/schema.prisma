@@ -14,23 +14,23 @@ model User {
   id        Int       @id @default(autoincrement())
   username  String    @unique
   hash      String    @db.VarChar(60)
-  createdAt DateTime  @default(now()) @db.Timestamp(6)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
   Product   Product[]
 }
 
 model Product {
   id           Int      @id @default(autoincrement())
   asin         Int
-  aePrice      Float
-  aedToDollar  Float
+  aePrice      Float    @map("ae_price")
+  aedToDollar  Float    @map("aed_to_dollar")
   rate         Float
   rating       Int
-  comPrice     Float
-  shippingCost Float
-  importFee    Float
-  totalPrice   Float
-  comRank      String
-  createdAt    DateTime @default(now()) @db.Timestamp(6)
-  authorId     Int
+  comPrice     Float    @map("com_price")
+  shippingCost Float    @map("shipping_cost")
+  importFee    Float    @map("import_fee")
+  totalPrice   Float    @map("total_price")
+  comRank      String   @map("com_rank")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  authorId     Int      @map("author_id")
   User         User     @relation(fields: [authorId], references: [id])
 }
