@@ -9,3 +9,28 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  hash      String    @db.VarChar(60)
+  createdAt DateTime  @default(now()) @db.Timestamp(6)
+  Product   Product[]
+}
+
+model Product {
+  id           Int      @id @default(autoincrement())
+  asin         Int
+  aePrice      Float
+  aedToDollar  Float
+  rate         Float
+  rating       Int
+  comPrice     Float
+  shippingCost Float
+  importFee    Float
+  totalPrice   Float
+  comRank      String
+  createdAt    DateTime @default(now()) @db.Timestamp(6)
+  authorId     Int
+  User         User     @relation(fields: [authorId], references: [id])
+}
