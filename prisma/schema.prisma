@@ -16,7 +16,9 @@ model User {
   username  String    @unique
   hash      String    @db.VarChar(60)
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
-  Product   Product[]
+  products  Product[]
+
+  @@map("users")
 }
 
 model Product {
@@ -33,5 +35,7 @@ model Product {
   comRank      String   @map("com_rank")
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   authorId     Int      @map("author_id")
-  User         User     @relation(fields: [authorId], references: [id])
+  author       User     @relation(fields: [authorId], references: [id])
+
+  @@map("products")
 }
