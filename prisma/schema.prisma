@@ -24,7 +24,7 @@ model User {
 
 model Product {
   id           Int      @id @default(autoincrement())
-  asin         Int
+  asin         String   @db.VarChar(10)
   aePrice      Float    @map("ae_price")
   aedToDollar  Float    @map("aed_to_dollar")
   rate         Float
