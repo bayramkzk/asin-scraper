@@ -7,10 +7,9 @@ import { SessionUser } from "@/types/User";
 export default NextAuth({
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: "credentials",
       credentials: {
-        name: { label: "Username", type: "text", placeholder: "jsmith" },
-        email: { label: "Email", type: "email", placeholder: "js@gmail.com" },
+        email: { label: "Email", type: "email", placeholder: "me@gmail.com" },
         password: { label: "Password", type: "password" },
       },
       // @ts-ignore: Unresolved next-auth typing bug
@@ -18,7 +17,7 @@ export default NextAuth({
         if (!credentials) return null;
 
         const user = await prisma.user.findUnique({
-          where: { name: credentials.name },
+          where: { email: credentials.email },
         });
 
         if (!user) return null;
