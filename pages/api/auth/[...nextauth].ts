@@ -1,10 +1,10 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import prisma from "@/lib/prisma";
 import { SessionUser } from "@/types/User";
 
-export default NextAuth({
+const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -46,4 +46,8 @@ export default NextAuth({
       return token;
     },
   },
-});
+};
+
+export { authOptions };
+
+export default NextAuth(authOptions);
