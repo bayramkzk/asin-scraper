@@ -24,7 +24,7 @@ export default function LogoLabelMobile() {
           textDecoration: "none",
         }}
       >
-        ASIN SCRAPER
+        ASIN
       </Typography>
     </>
   );
