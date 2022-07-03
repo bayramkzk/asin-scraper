@@ -3,6 +3,7 @@ import { SessionProvider } from "next-auth/react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { SWRConfig } from "swr";
 import "../styles/globals.css";
+import { CssBaseline } from "@mui/material";
 
 const darkTheme = createTheme({
   palette: {
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     >
       <SessionProvider session={session}>
         <ThemeProvider theme={darkTheme}>
+          <CssBaseline />
           <Component {...pageProps} />
         </ThemeProvider>
       </SessionProvider>
