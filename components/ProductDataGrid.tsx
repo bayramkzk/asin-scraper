@@ -115,7 +115,11 @@ export default function ProductDataGrid() {
             variant="contained"
             aria-label="outlined primary button group"
           >
-            <Button color="error" onClick={handleDelete}>
+            <Button
+              color="error"
+              disabled={selection.length === 0}
+              onClick={handleDelete}
+            >
               Delete
             </Button>
 
