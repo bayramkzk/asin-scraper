@@ -25,7 +25,7 @@ export default function ProfilePage() {
       <>
         <Header />
         <Container maxWidth="xl" sx={{ height: "100%", paddingBlock: "1rem" }}>
-          <Alert severity="error">Session couldn't authenticated!</Alert>
+          <Alert severity="error">Session couldn`&apos;`t authenticated!</Alert>
         </Container>
       </>
     );
