@@ -69,8 +69,8 @@ export default function SignInPage() {
         </Typography>
 
         <>
-          {Object.keys(errors).map((field) => (
-            <Alert severity="error">
+          {Object.keys(errors).map((field, index) => (
+            <Alert severity="error" key={index + field}>
               {/* @ts-ignore: React hook form typing problems */}
               {errors[field]?.message === "CredentialsSignin"
                 ? "Invalid credentials"
