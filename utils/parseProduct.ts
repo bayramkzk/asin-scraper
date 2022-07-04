@@ -2,6 +2,16 @@ import { JSDOM } from "jsdom";
 import ProductContext from "@/types/ProductContext";
 import ProductData from "@/types/Product";
 
+function findElementByText(dom: JSDOM, sel: string, text: string) {
+  const elements = Array.from(dom.window.document.querySelectorAll(sel)).filter(
+    (el) => el.textContent?.includes(text)
+  );
+  if (elements.length > 1) {
+    console.error("Found several results with same text");
+  }
+  return elements[0];
+}
+
 function parseNumber(string: string | undefined): number | undefined {
   return string === undefined ? undefined : +string;
 }
@@ -62,9 +72,12 @@ export function parseProductTotalPrice(domCom: JSDOM): number | undefined {
 }
 
 export function parseProductComRank(domCom: JSDOM): string | undefined {
-  const sel =
-    "#productDetails_detailBullets_sections1 > tbody > tr:nth-child(2) > td";
-  return parseElementText(domCom, sel);
+  const sel = ".a-color-secondary.a-size-base.prodDetSectionEntry";
+  const th = findElementByText(domCom, sel, "Best Sellers Rank");
+  if (!th.parentElement) return;
+  const td = th.parentElement.getElementsByTagName("td")[0];
+  if (!td.textContent) return;
+  return td.textContent.trim();
 }
 
 export default function parseProductHtml(ctx: ProductContext): ProductData {
