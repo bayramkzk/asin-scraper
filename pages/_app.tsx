@@ -2,17 +2,19 @@ import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { SWRConfig } from "swr";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, useMediaQuery } from "@mui/material";
 import fetcher from "@/utils/fetcher";
 import "../styles/globals.css";
 
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
-
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+  const prefersLightMode = useMediaQuery("(prefers-color-scheme: light)");
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: prefersLightMode ? "light" : "dark",
+    },
+  });
+
   return (
     <SWRConfig value={{ fetcher }}>
       <SessionProvider session={session}>

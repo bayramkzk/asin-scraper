@@ -45,6 +45,27 @@ a {
   animation: shine 1s linear infinite;
 }
 
+@media (prefers-color-scheme: light) {
+  .gradient-text {
+    background: linear-gradient(
+      to right,
+      #000 20%,
+      #85c4fb 40%,
+      #85c4fb 60%,
+      #000 80%
+    );
+    background-size: 200% auto;
+
+    color: #fff;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: shine 1s linear infinite;
+  }
+}
+
 @keyframes shine {
   to {
     background-position: 200% center;
