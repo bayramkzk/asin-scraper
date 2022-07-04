@@ -25,3 +25,28 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.gradient-text {
+  background: linear-gradient(
+    to right,
+    #fff 20%,
+    #85c4fb 40%,
+    #85c4fb 60%,
+    #fff 80%
+  );
+  background-size: 200% auto;
+
+  color: #000;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: shine 1s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
