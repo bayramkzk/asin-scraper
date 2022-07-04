@@ -25,15 +25,15 @@ model User {
 model Product {
   id           Int      @id @default(autoincrement())
   asin         String   @db.VarChar(10)
-  aePrice      Float    @map("ae_price")
-  aedToDollar  Float    @map("aed_to_dollar")
-  rate         Float
-  rating       Int
-  comPrice     Float    @map("com_price")
-  shippingCost Float    @map("shipping_cost")
-  importFee    Float    @map("import_fee")
-  totalPrice   Float    @map("total_price")
-  comRank      String   @map("com_rank")
+  aePrice      Float?   @map("ae_price")
+  aedToDollar  Float?   @map("aed_to_dollar")
+  rate         Float?
+  rating       Int?
+  comPrice     Float?   @map("com_price")
+  shippingCost Float?   @map("shipping_cost")
+  importFee    Float?   @map("import_fee")
+  totalPrice   Float?   @map("total_price")
+  comRank      String?  @map("com_rank")
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   authorId     Int      @map("author_id")
   author       User     @relation(fields: [authorId], references: [id])
