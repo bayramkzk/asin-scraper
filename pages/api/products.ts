@@ -5,12 +5,17 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import ApiContext from "@/types/ApiContext";
 import getProducts from "@/utils/getProducts";
 import postProducts from "@/utils/postProducts";
+import deleteProducts from "@/utils/deleteProducts";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "POST" && req.method !== "GET") {
+  if (
+    req.method !== "POST" &&
+    req.method !== "GET" &&
+    req.method !== "DELETE"
+  ) {
     return res.status(404).json({ error: "Undefined method" });
   }
 
@@ -30,9 +35,12 @@ export default async function handler(
 
   const context: ApiContext = { req, res, user, session };
 
-  if (req.method === "POST") {
-    await postProducts(context);
-  } else {
-    await getProducts(context);
+  switch (req.method) {
+    case "POST":
+      return await postProducts(context);
+    case "GET":
+      return await getProducts(context);
+    case "DELETE":
+      return await deleteProducts(context);
   }
 }
