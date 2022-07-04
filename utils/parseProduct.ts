@@ -2,58 +2,66 @@ import { JSDOM } from "jsdom";
 import ProductContext from "@/types/ProductContext";
 import ProductData from "@/types/Product";
 
-function parseElementText(dom: JSDOM, selector: string): string {
+function parseNumber(string: string | undefined): number | undefined {
+  return string === undefined ? undefined : +string;
+}
+
+function parseElementText(dom: JSDOM, selector: string): string | undefined {
   const e = dom.window.document.querySelector(selector);
   if (!e || !e.textContent) {
-    throw `Couldn't find element with selector: ${selector}`;
+    console.error(`Couldn't find element with selector: ${selector}`);
   }
-  return e.textContent.trim();
+  return e?.textContent?.trim();
 }
 
-export function parseProductComPrice(domCom: JSDOM): number {
+export function parseProductComPrice(domCom: JSDOM): number | undefined {
   const selector = ".a-price.a-text-price :first-child";
-  return +parseElementText(domCom, selector).slice(1);
+  return parseNumber(parseElementText(domCom, selector)?.slice(1));
 }
 
-export function parseProductAePrice(domAe: JSDOM): number {
+export function parseProductAePrice(domAe: JSDOM): number | undefined {
   const sel = "#corePrice_feature_div > div > span > span:nth-child(2)";
-  return +parseElementText(domAe, sel).slice(3);
+  return parseNumber(parseElementText(domAe, sel)?.slice(3));
 }
 
-export function parseProductAedToDollar(domAeDollar: JSDOM): number {
+export function parseProductAedToDollar(
+  domAeDollar: JSDOM
+): number | undefined {
   const sel = "#corePrice_feature_div > div > span > span:nth-child(2)";
-  return +parseElementText(domAeDollar, sel).slice(3);
+  return parseNumber(parseElementText(domAeDollar, sel)?.slice(3));
 }
 
-export function parseProductRate(domCom: JSDOM): number {
+export function parseProductRate(domCom: JSDOM): number | undefined {
   const sel = "#acrPopover > span.a-declarative > a > i.a-icon.a-icon-star";
-  return +parseElementText(domCom, sel).split(" ")[0];
+  return parseNumber(parseElementText(domCom, sel)?.split(" ")[0]);
 }
 
-export function parseProductRating(domCom: JSDOM): number {
+export function parseProductRating(domCom: JSDOM): number | undefined {
   const sel = "#acrCustomerReviewText";
-  return +parseElementText(domCom, sel).split(" ")[0].replace(",", "");
+  return parseNumber(
+    parseElementText(domCom, sel)?.split(" ")?.at(0)?.replace(",", "")
+  );
 }
 
-export function parseProductShippingCost(domCom: JSDOM): number {
+export function parseProductShippingCost(domCom: JSDOM): number | undefined {
   const sel =
     "#a-popover-agShipMsgPopover > table > tbody > tr:nth-child(2) > td.a-span2.a-text-right > span";
-  return +parseElementText(domCom, sel).slice(1);
+  return parseNumber(parseElementText(domCom, sel)?.slice(1));
 }
 
-export function parseProductImportFee(domCom: JSDOM): number {
+export function parseProductImportFee(domCom: JSDOM): number | undefined {
   const sel =
     "#a-popover-agShipMsgPopover > table > tbody > tr:nth-child(3) > td.a-span2.a-text-right > span";
-  return +parseElementText(domCom, sel).slice(1);
+  return parseNumber(parseElementText(domCom, sel)?.slice(1));
 }
 
-export function parseProductTotalPrice(domCom: JSDOM): number {
+export function parseProductTotalPrice(domCom: JSDOM): number | undefined {
   const sel =
     "#a-popover-agShipMsgPopover > table > tbody > tr:nth-child(5) > td.a-span2.a-text-right > span";
-  return +parseElementText(domCom, sel).slice(1);
+  return parseNumber(parseElementText(domCom, sel)?.slice(1));
 }
 
-export function parseProductComRank(domCom: JSDOM): string {
+export function parseProductComRank(domCom: JSDOM): string | undefined {
   const sel =
     "#productDetails_detailBullets_sections1 > tbody > tr:nth-child(2) > td";
   return parseElementText(domCom, sel);
