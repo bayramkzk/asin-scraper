@@ -11,8 +11,6 @@ export default function LogoLabelDesktop() {
       <Typography
         variant="h6"
         noWrap
-        component="a"
-        href="/"
         sx={{
           mr: 2,
           display: { xs: "none", md: "flex" },
@@ -21,6 +19,7 @@ export default function LogoLabelDesktop() {
           letterSpacing: ".3rem",
           color: "inherit",
           textDecoration: "none",
+          userSelect: "none",
         }}
       >
         ASIN SCRAPER

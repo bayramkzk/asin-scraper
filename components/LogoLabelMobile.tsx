@@ -11,8 +11,6 @@ export default function LogoLabelMobile() {
       <Typography
         variant="h5"
         noWrap
-        component="a"
-        href=""
         sx={{
           mr: 2,
           display: { xs: "flex", md: "none" },
@@ -22,6 +20,7 @@ export default function LogoLabelMobile() {
           letterSpacing: ".3rem",
           color: "inherit",
           textDecoration: "none",
+          userSelect: "none",
         }}
       >
         ASIN
