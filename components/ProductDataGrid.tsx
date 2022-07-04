@@ -1,4 +1,5 @@
 import React from "react";
+import { useSWRConfig } from "swr";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
@@ -55,9 +56,11 @@ const columns: GridColDef[] = [
 ];
 
 export default function ProductDataGrid() {
+  const { mutate } = useSWRConfig();
   const { products, error, loading } = useProducts();
   const [open, setOpen] = React.useState(false);
-  const [insertionLoading, setInsertionLoading] = React.useState(false);
+  const [mutationLoading, setMutationLoading] = React.useState(false);
+  const [selection, setSelection] = React.useState<number[]>([]);
 
   const handleInsertDialogOpen = () => {
     setOpen(true);
@@ -65,6 +68,23 @@ export default function ProductDataGrid() {
 
   const handleInsertDialogClose = () => {
     setOpen(false);
+  };
+
+  const handleDelete = async () => {
+    setMutationLoading(true);
+
+    const body = { idList: selection };
+    await fetch("/api/products", {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }).then((res) => res.json());
+
+    mutate("/api/products");
+    setMutationLoading(false);
   };
 
   if (loading) {
@@ -95,9 +115,11 @@ export default function ProductDataGrid() {
             variant="contained"
             aria-label="outlined primary button group"
           >
-            <Button onClick={handleInsertDialogOpen}>
-              Insert products by ASIN
+            <Button color="error" onClick={handleDelete}>
+              Delete
             </Button>
+
+            <Button onClick={handleInsertDialogOpen}>Insert</Button>
           </ButtonGroup>
         </Box>
 
@@ -106,13 +128,16 @@ export default function ProductDataGrid() {
           columns={columns}
           checkboxSelection
           disableSelectionOnClick
-          loading={insertionLoading}
+          loading={mutationLoading}
+          selectionModel={selection}
+          // @ts-ignore: Throwing typing conflict error but working
+          onSelectionModelChange={(sel) => setSelection(sel)}
         />
 
         <ProductInsertionDialog
           open={open}
           handleClose={handleInsertDialogClose}
-          setLoading={setInsertionLoading}
+          setLoading={setMutationLoading}
         />
       </Box>
     </Container>
