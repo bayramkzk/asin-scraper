@@ -7,8 +7,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Alert from "@mui/material/Alert";
-import Typography from "@mui/material/Typography";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import Grid from "@mui/material/Grid";
 import { PostProductsResult } from "@/utils/postProducts";
@@ -101,30 +99,17 @@ export default function ProductInsertionDialog({
             products have been inserted!
           </DialogContentText>
 
-          {result?.createdCount === asinCount ? (
-            <Grid
-              container
-              spacing={0}
-              direction="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Grid item>
-                <DoneAllIcon color="success" sx={{ width: 128, height: 128 }} />
-              </Grid>
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Grid item>
+              <DoneAllIcon color="success" sx={{ width: 128, height: 128 }} />
             </Grid>
-          ) : (
-            <Alert severity="warning">
-              Server response:
-              <Typography
-                component="pre"
-                fontFamily="monospace"
-                sx={{ whiteSpace: "pre-wrap" }}
-              >
-                {JSON.stringify(result, null, 2)}
-              </Typography>
-            </Alert>
-          )}
+          </Grid>
         </DialogContent>
 
         <DialogActions>
