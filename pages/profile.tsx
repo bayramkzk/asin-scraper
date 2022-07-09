@@ -1,31 +1,35 @@
+import type { GetServerSideProps } from "next";
+import type { SessionUser } from "@/types/User";
+import { Role } from "@prisma/client";
 import { signOut, useSession } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth";
 import Grid from "@mui/material/Grid";
-import LinearProgress from "@mui/material/LinearProgress";
 import Alert from "@mui/material/Alert";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import SessionAvatar from "@/components/SessionAvatar";
 import Header from "@/components/Header";
+import { authOptions } from "./api/auth/[...nextauth]";
+import prisma from "@/lib/prisma";
 
-export default function ProfilePage() {
-  const { data: session, status } = useSession();
+interface RoleUser extends SessionUser {
+  role: Role;
+}
 
-  if (status === "loading") {
-    return (
-      <>
-        <Header />
-        <LinearProgress />
-      </>
-    );
-  }
+interface ProfilePageServerSideProps {
+  user: RoleUser | null;
+}
 
-  if (status === "unauthenticated" || !session) {
+interface ProfilePageProps extends ProfilePageServerSideProps {}
+
+export default function ProfilePage({ user }: ProfilePageProps) {
+  if (!user) {
     return (
       <>
         <Header />
         <Container maxWidth="xl" sx={{ height: "100%", paddingBlock: "1rem" }}>
-          <Alert severity="error">Session couldn`&apos;`t authenticated!</Alert>
+          <Alert severity="error">Session couldn&apos;t authenticated!</Alert>
         </Container>
       </>
     );
@@ -55,9 +59,11 @@ export default function ProfilePage() {
             fontWeight={500}
             fontFamily="monospace"
           >
-            {session.user.name}
+            {user.name}
             <br />
-            {session.user.email}
+            {user.email}
+            <br />
+            {user.role}
           </Typography>
         </Grid>
 
@@ -70,3 +76,33 @@ export default function ProfilePage() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<
+  ProfilePageServerSideProps
+> = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  if (!session?.user) {
+    return { props: { user: null } };
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email },
+  });
+  if (!user) {
+    return { props: { user: null } };
+  }
+
+  return {
+    props: {
+      user: {
+        name: session.user.name,
+        email: session.user.email,
+        role: user.role,
+      },
+    },
+  };
+};
