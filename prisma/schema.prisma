@@ -17,9 +17,17 @@ model User {
   email     String    @unique
   hash      String    @db.VarChar(60)
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+  role      Role      @default(USER)
   products  Product[]
 
   @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
+
+  @@map("role")
 }
 
 model Product {
