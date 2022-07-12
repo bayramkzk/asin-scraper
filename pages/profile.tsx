@@ -1,8 +1,4 @@
-import type { GetServerSideProps } from "next";
-import type { SessionUser } from "@/types/User";
-import { Role } from "@prisma/client";
 import { signOut, useSession } from "next-auth/react";
-import { unstable_getServerSession } from "next-auth";
 import Grid from "@mui/material/Grid";
 import Alert from "@mui/material/Alert";
 import Container from "@mui/material/Container";
@@ -10,21 +6,14 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import SessionAvatar from "@/components/SessionAvatar";
 import Header from "@/components/Header";
-import { authOptions } from "./api/auth/[...nextauth]";
-import prisma from "@/lib/prisma";
 
-interface RoleUser extends SessionUser {
-  role: Role;
-}
+interface ProfilePageProps {}
 
-interface ProfilePageServerSideProps {
-  user: RoleUser | null;
-}
+export default function ProfilePage(props: ProfilePageProps) {
+  const { data: session } = useSession();
 
-interface ProfilePageProps extends ProfilePageServerSideProps {}
-
-export default function ProfilePage({ user }: ProfilePageProps) {
-  if (!user) {
+  if (!session?.user) {
+    console.log("FAIL");
     return (
       <>
         <Header />
@@ -59,11 +48,11 @@ export default function ProfilePage({ user }: ProfilePageProps) {
             fontWeight={500}
             fontFamily="monospace"
           >
-            {user.name}
+            {session.user.name}
             <br />
-            {user.email}
+            {session.user.email}
             <br />
-            {user.role}
+            {session.user.role}
           </Typography>
         </Grid>
 
@@ -76,33 +65,3 @@ export default function ProfilePage({ user }: ProfilePageProps) {
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps<
-  ProfilePageServerSideProps
-> = async (context) => {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
-  if (!session?.user) {
-    return { props: { user: null } };
-  }
-
-  const user = await prisma.user.findUnique({
-    where: { email: session.user.email },
-  });
-  if (!user) {
-    return { props: { user: null } };
-  }
-
-  return {
-    props: {
-      user: {
-        name: session.user.name,
-        email: session.user.email,
-        role: user.role,
-      },
-    },
-  };
-};
