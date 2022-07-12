@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import prisma from "@/lib/prisma";
@@ -26,8 +26,11 @@ const authOptions: NextAuthOptions = {
 
         if (success) {
           return {
+            id: user.id,
             name: user.name,
             email: user.email,
+            role: user.role,
+            createdAt: user.createdAt,
           };
         }
 
@@ -36,11 +39,12 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async session({ session, user, token }) {
+    async session({ session, token }): Promise<Session> {
+      session.user = token.user as SessionUser;
       return session;
     },
-    async jwt({ token, user, account, profile, isNewUser }) {
-      token.user = user;
+    async jwt({ token, user }) {
+      token.user ??= user;
       return token;
     },
   },
