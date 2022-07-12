@@ -13,7 +13,6 @@ export default function ProfilePage(props: ProfilePageProps) {
   const { data: session } = useSession();
 
   if (!session?.user) {
-    console.log("FAIL");
     return (
       <>
         <Header />
