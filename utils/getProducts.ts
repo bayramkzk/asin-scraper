@@ -1,9 +1,9 @@
 import prisma from "@/lib/prisma";
 import ApiContext from "@/types/ApiContext";
 
-export default async function getProducts({ user, res }: ApiContext) {
+export default async function getProducts({ res, session }: ApiContext) {
   const products = await prisma.product.findMany({
-    where: { authorId: user.id },
+    where: { authorId: session.user.id },
     select: {
       id: true,
       asin: true,

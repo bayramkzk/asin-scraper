@@ -5,6 +5,5 @@ import { Session } from "next-auth";
 export default interface ApiContext<T = any> {
   req: NextApiRequest;
   res: NextApiResponse<T>;
-  user: User;
   session: Session;
 }

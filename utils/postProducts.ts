@@ -32,7 +32,7 @@ export async function fetchProductContext(
   return { asin, htmlCom, htmlAe, htmlAeDollar };
 }
 
-export default async function postProducts({ req, res, user }: ApiContext) {
+export default async function postProducts({ req, res, session }: ApiContext) {
   if (!req.body.asinCodes) {
     return res.status(400).json({ error: "Missing required body field" });
   }
@@ -49,7 +49,7 @@ export default async function postProducts({ req, res, user }: ApiContext) {
     .map((r) => r.value);
 
   const { count: createdCount } = await prisma.product.createMany({
-    data: fulfilledProducts.map((p) => ({ ...p, authorId: user.id })),
+    data: fulfilledProducts.map((p) => ({ ...p, authorId: session.user.id })),
     skipDuplicates: true,
   });
 
