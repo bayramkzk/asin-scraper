@@ -9,15 +9,21 @@ import NavMenu from "./NavMenu";
 import LogoLabelDesktop from "./LogoLabelDesktop";
 import LogoLabelMobile from "./LogoLabelMobile";
 import Page from "@/types/Page";
+import { useSession } from "next-auth/react";
 
 const Header = () => {
   const router = useRouter();
+  const { data: session } = useSession();
+  const isAdmin =
+    session &&
+    (session.user.role === "ADMIN" || session.user.role === "SUPERADMIN");
 
-  const pages: Page[] = [
-    { name: "Panel", onClick: () => router.push("/") },
+  const pages = [
+    { name: "Products", onClick: () => router.push("/") },
+    isAdmin && { name: "Users", onClick: () => router.push("/users") },
     { name: "Profile", onClick: () => router.push("/profile") },
     { name: "About", onClick: () => router.push("/about") },
-  ];
+  ].filter((p) => p) as Page[];
 
   return (
     <AppBar position="static">
