@@ -33,7 +33,7 @@ export default async function handler(
     return res.status(401).json({ error: "User not found" });
   }
 
-  const context: ApiContext = { req, res, user, session };
+  const context: ApiContext = { req, res, session };
 
   switch (req.method) {
     case "POST":
