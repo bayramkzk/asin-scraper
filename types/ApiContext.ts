@@ -1,4 +1,3 @@
-import { User } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Session } from "next-auth";
 
