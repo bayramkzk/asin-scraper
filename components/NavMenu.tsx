@@ -6,12 +6,14 @@ import Menu from "@mui/material/Menu";
 import Page from "@/types/Page";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/router";
 
 interface NavMenuProps {
   pages: Page[];
 }
 
 function NavMenu({ pages }: NavMenuProps) {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -55,12 +57,16 @@ function NavMenu({ pages }: NavMenuProps) {
         {pages.map((page) => (
           <MenuItem
             key={page.name}
-            onClick={(e) => {
+            onClick={() => {
               handleCloseNavMenu();
-              page.onClick(e);
+              router.push(page.href);
             }}
           >
-            <Typography textAlign="center">{page.name}</Typography>
+            <Typography
+              color={router.pathname === page.href ? "primary" : "inherit"}
+            >
+              {page.name}
+            </Typography>
           </MenuItem>
         ))}
       </Menu>

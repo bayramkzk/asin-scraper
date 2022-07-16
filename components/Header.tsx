@@ -19,10 +19,10 @@ const Header = () => {
     (session.user.role === "ADMIN" || session.user.role === "SUPERADMIN");
 
   const pages = [
-    { name: "Products", onClick: () => router.push("/") },
-    isAdmin && { name: "Users", onClick: () => router.push("/users") },
-    { name: "Profile", onClick: () => router.push("/profile") },
-    { name: "About", onClick: () => router.push("/about") },
+    { name: "Products", href: "/" },
+    isAdmin && { name: "Users", href: "/users" },
+    { name: "Profile", href: "/profile" },
+    { name: "About", href: "/about" },
   ].filter((p) => p) as Page[];
 
   return (
