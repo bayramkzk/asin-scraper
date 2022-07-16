@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import ApiContext from "@/types/ApiContext";
 import getProducts from "@/utils/getProducts";

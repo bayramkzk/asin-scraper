@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import ApiContext from "@/types/ApiContext";
 
 export default async function getProducts({ res, session }: ApiContext) {

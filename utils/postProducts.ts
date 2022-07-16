@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import ProductData from "@/types/Product";
 import ApiContext from "@/types/ApiContext";
 import ProductContext from "@/types/ProductContext";

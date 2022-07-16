@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import ApiContext from "@/types/ApiContext";
 import { Prisma } from "@prisma/client";
 import { Session } from "next-auth";
