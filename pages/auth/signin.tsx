@@ -13,6 +13,7 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import { useRouter } from "next/router";
 import { Alert } from "@mui/material";
+import RhfTextField from "@/components/RhfTextField";
 
 export default function SignInPage() {
   const {
@@ -79,40 +80,18 @@ export default function SignInPage() {
           ))}
         </>
 
-        <RhfController
-          name={"email"}
+        <RhfTextField
           control={control}
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              value={value}
-              onChange={onChange}
-              autoFocus
-              id="email"
-              name="email"
-              label="Email address"
-              type="email"
-              variant="outlined"
-              fullWidth
-            />
-          )}
+          name="email"
+          label="Email address"
+          type="email"
         />
 
-        <RhfController
-          name={"password"}
+        <RhfTextField
           control={control}
-          render={({ field: { onChange, value } }) => (
-            <TextField
-              value={value}
-              onChange={onChange}
-              autoFocus
-              id="password"
-              name="password"
-              label="Password"
-              type="password"
-              variant="outlined"
-              fullWidth
-            />
-          )}
+          name="password"
+          label="Password"
+          type="password"
         />
 
         <Button type="submit" variant="contained">
