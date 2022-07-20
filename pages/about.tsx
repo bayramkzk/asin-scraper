@@ -41,7 +41,7 @@ export default function AboutPage() {
             textAlign: "center",
           }}
         >
-          Version 1
+          Version 2
         </Typography>
       </Box>
     </>
