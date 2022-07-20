@@ -7,8 +7,13 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import CircularProgress from "@mui/material/CircularProgress";
 import WarningIcon from "@mui/icons-material/Warning";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import EmailIcon from "@mui/icons-material/Email";
+import SecurityIcon from "@mui/icons-material/Security";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
+import ListItemText from "@mui/material/ListItemText";
 import SessionAvatar from "./SessionAvatar";
-import { SessionUser } from "@/types/User";
 
 const ProfileMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -28,8 +33,6 @@ const ProfileMenu = () => {
   const handleSignOut = () => {
     signOut();
   };
-
-  const user = session.user as SessionUser;
 
   return (
     <Box sx={{ flexGrow: 0 }}>
@@ -54,8 +57,29 @@ const ProfileMenu = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem disabled>{user.name}</MenuItem>
-        <MenuItem disabled>{user.email}</MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <AccountCircleIcon />
+          </ListItemIcon>
+          <ListItemText>{session.user.name}</ListItemText>
+        </MenuItem>
+
+        <MenuItem>
+          <ListItemIcon>
+            <EmailIcon />
+          </ListItemIcon>
+          <ListItemText>{session.user.email}</ListItemText>
+        </MenuItem>
+
+        <MenuItem>
+          <ListItemIcon>
+            <SecurityIcon />
+          </ListItemIcon>
+          <ListItemText>{session.user.role}</ListItemText>
+        </MenuItem>
+
+        <Divider />
+
         <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
       </Menu>
     </Box>
