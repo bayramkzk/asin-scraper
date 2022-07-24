@@ -1,9 +1,8 @@
-import React from "react";
+import Page from "@/types/Page";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Page from "@/types/Page";
-import { useRouter } from "next/router";
 import { useTheme } from "@mui/material/styles";
+import { useRouter } from "next/router";
 
 interface NavBarProps {
   pages: Page[];

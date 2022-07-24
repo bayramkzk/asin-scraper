@@ -1,5 +1,5 @@
-import { DefaultUser } from "next-auth";
 import { SessionUser } from "@/types/User";
+import "next-auth";
 
 declare module "next-auth" {
   /**

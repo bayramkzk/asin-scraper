@@ -1,11 +1,11 @@
-import { signOut, useSession } from "next-auth/react";
-import Grid from "@mui/material/Grid";
-import Alert from "@mui/material/Alert";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import SessionAvatar from "@/components/SessionAvatar";
 import Header from "@/components/Header";
+import SessionAvatar from "@/components/SessionAvatar";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { signOut, useSession } from "next-auth/react";
 
 interface ProfilePageProps {}
 

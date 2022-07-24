@@ -1,10 +1,10 @@
-import type { AppProps } from "next/app";
-import { SessionProvider } from "next-auth/react";
-import { SWRConfig } from "swr";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { CssBaseline, useMediaQuery } from "@mui/material";
-import Head from "next/head";
 import fetcher from "@/utils/fetcher";
+import { CssBaseline, useMediaQuery } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { SessionProvider } from "next-auth/react";
+import type { AppProps } from "next/app";
+import Head from "next/head";
+import { SWRConfig } from "swr";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {

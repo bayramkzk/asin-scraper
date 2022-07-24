@@ -1,4 +1,3 @@
-import * as React from "react";
 import Avatar, { AvatarProps } from "@mui/material/Avatar";
 
 function stringToColor(string: string) {

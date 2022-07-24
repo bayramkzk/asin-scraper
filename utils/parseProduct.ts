@@ -1,6 +1,6 @@
-import { JSDOM } from "jsdom";
-import ProductContext from "@/types/ProductContext";
 import ProductData from "@/types/Product";
+import ProductContext from "@/types/ProductContext";
+import { JSDOM } from "jsdom";
 
 function findElementByText(dom: JSDOM, sel: string, text: string) {
   const elements = Array.from(dom.window.document.querySelectorAll(sel)).filter(

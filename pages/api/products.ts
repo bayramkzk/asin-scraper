@@ -1,11 +1,11 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { unstable_getServerSession } from "next-auth";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import ApiContext from "@/types/ApiContext";
+import deleteProducts from "@/utils/deleteProducts";
 import getProducts from "@/utils/getProducts";
 import postProducts from "@/utils/postProducts";
-import deleteProducts from "@/utils/deleteProducts";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { unstable_getServerSession } from "next-auth";
 
 export default async function handler(
   req: NextApiRequest,

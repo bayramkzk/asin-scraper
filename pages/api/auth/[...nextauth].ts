@@ -1,8 +1,8 @@
-import NextAuth, { NextAuthOptions, Session } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
 import { SessionUser } from "@/types/User";
+import bcrypt from "bcrypt";
+import NextAuth, { NextAuthOptions, Session } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 const authOptions: NextAuthOptions = {
   providers: [

@@ -1,8 +1,8 @@
-import React from "react";
-import { useSession } from "next-auth/react";
-import LetterAvatar from "./LetterAvatar";
-import WarningIcon from "@mui/icons-material/Warning";
 import { SessionUser } from "@/types/User";
+import WarningIcon from "@mui/icons-material/Warning";
+import { useSession } from "next-auth/react";
+import React from "react";
+import LetterAvatar from "./LetterAvatar";
 
 interface SessionAvatarProps {
   size?: number | string;

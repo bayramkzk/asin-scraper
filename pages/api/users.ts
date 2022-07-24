@@ -1,11 +1,11 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import ApiContext from "@/types/ApiContext";
-import postUser from "@/utils/postUser";
+import deleteUsers from "@/utils/deleteUsers";
 import getUsers from "@/utils/getUsers";
 import patchUser from "@/utils/patchUser";
-import deleteUsers from "@/utils/deleteUsers";
+import postUser from "@/utils/postUser";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { unstable_getServerSession } from "next-auth";
 
 export default async function handler(
   req: NextApiRequest,

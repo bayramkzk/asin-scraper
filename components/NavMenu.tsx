@@ -1,12 +1,12 @@
-import React from "react";
+import Page from "@/types/Page";
+import MenuIcon from "@mui/icons-material/Menu";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
-import Page from "@/types/Page";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
+import React from "react";
 
 interface NavMenuProps {
   pages: Page[];

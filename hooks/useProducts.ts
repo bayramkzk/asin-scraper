@@ -1,5 +1,5 @@
-import useSWR from "swr";
 import { Product } from "@prisma/client";
+import useSWR from "swr";
 
 export default function useProducts() {
   const { data, error } = useSWR<Product[]>("/api/products");

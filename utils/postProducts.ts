@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
-import ProductData from "@/types/Product";
 import ApiContext from "@/types/ApiContext";
+import ProductData from "@/types/Product";
 import ProductContext from "@/types/ProductContext";
 import parseProductHtml from "./parseProduct";
 

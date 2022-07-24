@@ -1,14 +1,14 @@
-import React from "react";
-import { useSWRConfig } from "swr";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+import useProducts from "@/hooks/useProducts";
 import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import Container from "@mui/material/Container";
 import LinearProgress from "@mui/material/LinearProgress";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import React from "react";
+import { useSWRConfig } from "swr";
 import ProductInsertionDialog from "./ProductInsertionDialog";
-import useProducts from "@/hooks/useProducts";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", type: "number", width: 100 },

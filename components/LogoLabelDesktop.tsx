@@ -1,4 +1,3 @@
-import React from "react";
 import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
 import Typography from "@mui/material/Typography";
 

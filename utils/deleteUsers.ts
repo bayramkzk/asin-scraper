@@ -1,5 +1,5 @@
-import ApiContext from "@/types/ApiContext";
 import { prisma } from "@/lib/prisma";
+import ApiContext from "@/types/ApiContext";
 import getTargetMutationRole from "./getTargetMutationRole";
 
 export default async function deleteUsers({ req, res, session }: ApiContext) {

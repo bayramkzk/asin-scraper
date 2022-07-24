@@ -1,18 +1,18 @@
-import React from "react";
-import { signOut, useSession } from "next-auth/react";
-import Menu from "@mui/material/Menu";
-import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import CircularProgress from "@mui/material/CircularProgress";
-import WarningIcon from "@mui/icons-material/Warning";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EmailIcon from "@mui/icons-material/Email";
 import SecurityIcon from "@mui/icons-material/Security";
-import ListItemIcon from "@mui/material/ListItemIcon";
+import WarningIcon from "@mui/icons-material/Warning";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Tooltip from "@mui/material/Tooltip";
+import { signOut, useSession } from "next-auth/react";
+import React from "react";
 import SessionAvatar from "./SessionAvatar";
 
 const ProfileMenu = () => {

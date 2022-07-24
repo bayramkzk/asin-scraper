@@ -1,15 +1,14 @@
-import React from "react";
-import { useRouter } from "next/router";
+import Page from "@/types/Page";
 import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
-import ProfileMenu from "./ProfileMenu";
-import NavBar from "./NavBar";
-import NavMenu from "./NavMenu";
+import Toolbar from "@mui/material/Toolbar";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import LogoLabelDesktop from "./LogoLabelDesktop";
 import LogoLabelMobile from "./LogoLabelMobile";
-import Page from "@/types/Page";
-import { useSession } from "next-auth/react";
+import NavBar from "./NavBar";
+import NavMenu from "./NavMenu";
+import ProfileMenu from "./ProfileMenu";
 
 const Header = () => {
   const router = useRouter();

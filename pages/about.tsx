@@ -1,7 +1,7 @@
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
 import Header from "@/components/Header";
+import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 export default function AboutPage() {
   return (
