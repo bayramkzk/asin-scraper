@@ -14,7 +14,12 @@ export default function SignInPage() {
     control,
     setError,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    } as FieldValues,
+  });
   const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
