@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
           <Head>
             <title>ASIN Scraper</title>
           </Head>
-          <CssBaseline />
+          <CssBaseline enableColorScheme />
           <Component {...pageProps} />
         </ThemeProvider>
       </SessionProvider>
