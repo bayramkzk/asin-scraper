@@ -15,6 +15,12 @@ const columns: GridColDef[] = [
   { field: "name", headerName: "Name", type: "string", width: 200 },
   { field: "email", headerName: "Email", type: "string", width: 250 },
   { field: "role", headerName: "Role", type: "string", width: 100 },
+  {
+    field: "expiresAt",
+    headerName: "Expiration Date",
+    type: "date",
+    width: 250,
+  },
   { field: "createdAt", headerName: "Creation Date", type: "date", width: 250 },
 ];
 
