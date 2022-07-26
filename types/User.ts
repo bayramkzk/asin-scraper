@@ -5,6 +5,7 @@ export interface SessionUser {
   name: string;
   email: string;
   createdAt: Date;
+  expiresAt: Date;
   role: Role;
 }
 

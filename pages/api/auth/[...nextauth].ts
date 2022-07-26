@@ -19,22 +19,22 @@ const authOptions: NextAuthOptions = {
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
-
         if (!user) return null;
 
-        const success = await bcrypt.compare(credentials.password, user.hash);
+        const isExpired = user.expiresAt < new Date();
+        if (isExpired) return null;
 
-        if (success) {
-          return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            createdAt: user.createdAt,
-          };
-        }
+        const isValid = await bcrypt.compare(credentials.password, user.hash);
+        if (!isValid) return null;
 
-        return null;
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          expiresAt: user.expiresAt,
+          createdAt: user.createdAt,
+        };
       },
     }),
   ],
