@@ -12,13 +12,14 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String
-  email     String    @unique
-  hash      String    @db.VarChar(60)
-  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
-  role      Role      @default(USER)
-  products  Product[]
+  id             Int       @id @default(autoincrement())
+  name           String
+  email          String    @unique
+  hash           String    @db.VarChar(60)
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+  role           Role      @default(USER)
+  expirationDate DateTime  @default("9999-12-30T00:00:00-00:00") @map("expiration_date") @db.Timestamp(6)
+  products       Product[]
 
   @@map("users")
 }
