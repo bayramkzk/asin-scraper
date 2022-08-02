@@ -9,4 +9,5 @@ export default interface ProductData {
   importFee?: number;
   totalPrice?: number;
   comRank?: string;
+  soldBy?: string;
 }

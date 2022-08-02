@@ -53,6 +53,12 @@ const columns: GridColDef[] = [
     type: "string",
     width: 750,
   },
+  {
+    field: "soldBy",
+    headerName: "Sold By",
+    type: "string",
+    width: 250,
+  },
   { field: "createdAt", headerName: "Creation Date", type: "date", width: 250 },
 ];
 

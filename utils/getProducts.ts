@@ -16,6 +16,7 @@ export default async function getProducts({ res, session }: ApiContext) {
       importFee: true,
       totalPrice: true,
       comRank: true,
+      soldBy: true,
       createdAt: true,
     },
   });

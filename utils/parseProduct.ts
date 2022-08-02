@@ -80,6 +80,12 @@ export function parseProductComRank(domCom: JSDOM): string | undefined {
   return td.textContent.trim();
 }
 
+export function parseProductSoldBy(domCom: JSDOM): string | undefined {
+  const sel =
+    "#tabular-buybox > div.tabular-buybox-container > div:nth-child(2) > div > span";
+  return parseElementText(domCom, sel);
+}
+
 export default function parseProductHtml(ctx: ProductContext): ProductData {
   const { htmlCom, htmlAe, htmlAeDollar, asin } = ctx;
 
@@ -96,6 +102,7 @@ export default function parseProductHtml(ctx: ProductContext): ProductData {
   const importFee = parseProductImportFee(domCom);
   const totalPrice = parseProductTotalPrice(domCom);
   const comRank = parseProductComRank(domCom);
+  const soldBy = parseProductSoldBy(domCom);
 
   return {
     asin,
@@ -108,5 +115,6 @@ export default function parseProductHtml(ctx: ProductContext): ProductData {
     importFee,
     totalPrice,
     comRank,
+    soldBy,
   };
 }
