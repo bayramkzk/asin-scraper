@@ -116,7 +116,7 @@ export default function ProductDataGrid() {
             variant="contained"
             aria-label="outlined primary button group"
           >
-            <ProductExportButton />
+            <ProductExportButton products={products} columns={columns} />
 
             <Button
               color="error"
