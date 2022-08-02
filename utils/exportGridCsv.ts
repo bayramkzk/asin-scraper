@@ -1,24 +1,24 @@
-import { GridColumns } from "@mui/x-data-grid";
-import { Product } from "@prisma/client";
+import { GridColumns, GridRowsProp } from "@mui/x-data-grid";
 
 export default function exportGridCsv(
-  products: Product[],
+  rows: GridRowsProp,
   columns: GridColumns
 ) {
   const headersRow = columns
     .map((column) => column.headerName || column.field)
+    .map((column) => column.replace(/,/g, ""))
     .join(",");
 
-  const dataRows = products
-    .map((product) => {
-      const row = columns
+  const dataRows = rows
+    .map((row) => {
+      const line = columns
         .map((column) => {
-          const value = product[column.field as keyof Product];
+          const value = row[column.field];
           return value ? value.toString() : "";
         })
         .map((value) => value.replace(/,/g, ""))
         .join(",");
-      return row;
+      return line;
     })
     .join("\n");
 
