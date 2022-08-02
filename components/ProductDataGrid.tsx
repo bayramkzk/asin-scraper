@@ -51,7 +51,7 @@ const columns: GridColDef[] = [
     field: "comRank",
     headerName: "COM Seller Rank Info",
     type: "string",
-    width: 600,
+    width: 750,
   },
   { field: "createdAt", headerName: "Creation Date", type: "date", width: 250 },
 ];
