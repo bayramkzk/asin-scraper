@@ -1,4 +1,5 @@
 import exportGridCsv from "@/utils/exportGridCsv";
+import exportGridExcel from "@/utils/exportGridExcel";
 import saveFile from "@/utils/saveFile";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -28,6 +29,16 @@ const ProductExportButton: React.FC<ProductExportButtonProps> = (props) => {
     saveFile(content, filename, "text/csv");
   };
 
+  const handleExportExcel = async () => {
+    const buffer = await exportGridExcel(props.products, props.columns);
+    const filename = `Products-${new Date().toISOString()}.xlsx`;
+    saveFile(
+      buffer,
+      filename,
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+  };
+
   return (
     <>
       <Button color="success" onClick={handleClick}>
@@ -41,7 +52,7 @@ const ProductExportButton: React.FC<ProductExportButtonProps> = (props) => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleExportCsv}>Download as CSV</MenuItem>
-        <MenuItem>Download as Excel</MenuItem>
+        <MenuItem onClick={handleExportExcel}>Download as Excel</MenuItem>
       </Menu>
     </>
   );
