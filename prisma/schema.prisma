@@ -44,6 +44,7 @@ model Product {
   importFee    Float?   @map("import_fee")
   totalPrice   Float?   @map("total_price")
   comRank      String?  @map("com_rank")
+  soldBy       String?  @map("sold_by")
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   authorId     Int      @map("author_id")
   author       User     @relation(fields: [authorId], references: [id])
