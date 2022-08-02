@@ -8,6 +8,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React from "react";
 import { useSWRConfig } from "swr";
+import ProductExportButton from "./ProductExportButton";
 import ProductInsertionDialog from "./ProductInsertionDialog";
 
 const columns: GridColDef[] = [
@@ -115,6 +116,8 @@ export default function ProductDataGrid() {
             variant="contained"
             aria-label="outlined primary button group"
           >
+            <ProductExportButton />
+
             <Button
               color="error"
               disabled={selection.length === 0}
@@ -134,8 +137,7 @@ export default function ProductDataGrid() {
           disableSelectionOnClick
           loading={mutationLoading}
           selectionModel={selection}
-          // @ts-ignore: Throwing typing conflict error but working
-          onSelectionModelChange={(sel) => setSelection(sel)}
+          onSelectionModelChange={(sel) => setSelection(sel.map(Number))}
         />
 
         <ProductInsertionDialog
