@@ -1,4 +1,8 @@
-export default function saveFile(data: string, filename: string, type: string) {
+export default function saveFile(
+  data: string | ArrayBuffer,
+  filename: string,
+  type: string
+) {
   var file = new Blob([data], { type: type });
   const nav = window.navigator as any;
   if (nav.msSaveOrOpenBlob)
