@@ -74,9 +74,9 @@ export function parseProductTotalPrice(domCom: JSDOM): number | undefined {
 export function parseProductComRank(domCom: JSDOM): string | undefined {
   const sel = ".a-color-secondary.a-size-base.prodDetSectionEntry";
   const th = findElementByText(domCom, sel, "Best Sellers Rank");
-  if (!th.parentElement) return;
+  if (!th?.parentElement) return;
   const td = th.parentElement.getElementsByTagName("td")[0];
-  if (!td.textContent) return;
+  if (!td?.textContent) return;
   return td.textContent.trim();
 }
 
