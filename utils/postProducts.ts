@@ -40,7 +40,9 @@ export default async function postProducts({ req, res, session }: ApiContext) {
   const asinCodes = req.body.asinCodes as string[];
 
   const settledProducts = await Promise.allSettled(
-    asinCodes.map((asin) => fetchProductContext(asin).then(parseProductHtml))
+    asinCodes.map((asin) =>
+      fetchProductContext(asin).then(parseProductHtml).catch(console.error)
+    )
   );
 
   const fulfilledProducts = settledProducts
