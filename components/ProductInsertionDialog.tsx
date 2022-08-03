@@ -1,15 +1,14 @@
-import { PostProductsResult } from "@/utils/postProducts";
-import DoneAllIcon from "@mui/icons-material/DoneAll";
+import { ProductInsertionStatusMap } from "@/types/ProductInsertionStatusMap";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
 import { useSWRConfig } from "swr";
+import ProductInsertionLoadingTable from "./ProductInsertionLoadingTable";
 
 interface ProductInsertionDialogProps {
   open: boolean;
@@ -23,53 +22,89 @@ export default function ProductInsertionDialog({
   setLoading,
 }: ProductInsertionDialogProps) {
   const { mutate } = useSWRConfig();
-  const [text, setText] = React.useState("");
-  const [asinCount, setAsinCount] = React.useState(0);
-  const [result, setResult] = React.useState<PostProductsResult | null>(null);
-  const [resultOpen, setResultOpen] = React.useState(false);
 
-  const handleResultOpen = () => setResultOpen(true);
-  const handleResultClose = () => {
-    setResultOpen(false);
-    setAsinCount(0);
-    setResult(null);
-  };
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isDone, setIsDone] = React.useState(true);
+  const [asinText, setAsinText] = React.useState("");
+  const asinCodes = React.useMemo(() => {
+    return asinText
+      .split("\n")
+      .map((str) => str.trim())
+      .filter((str) => str.length > 0)
+      .filter((str, index, arr) => arr.indexOf(str) === index);
+  }, [asinText]);
+  const [statusMap, setStatusMap] = React.useState<ProductInsertionStatusMap>(
+    {}
+  );
+
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (isDone && !open) {
+        setIsSubmitting(false);
+        setAsinText("");
+        setStatusMap({});
+        mutate("/api/products");
+      }
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [isDone, open]);
 
   const handleSubmit = async () => {
-    const body = { asinCodes: text.trim().split("\n") };
+    if (isSubmitting || asinCodes.length === 0) return;
 
-    handleClose();
-    setAsinCount(body.asinCodes.length);
+    setIsSubmitting(true);
     setLoading(true);
+    setIsDone(false);
 
-    const res = await fetch("/api/products", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    }).then((res) => res.json());
-    const postProductsRes = res as PostProductsResult;
+    setStatusMap(() => {
+      return asinCodes.reduce((acc, asin) => {
+        return { ...acc, [asin]: "pending" };
+      }, {});
+    });
 
-    setResult(postProductsRes);
+    await Promise.allSettled(
+      asinCodes.map(async (asin) => {
+        setStatusMap((map) => ({ ...map, [asin]: "loading" }));
+
+        await fetch("/api/products", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ asinCodes: [asin] }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(`POST PRODUCT ${asin}`, res);
+            setStatusMap((map) => ({
+              ...map,
+              [asin]: res.error || res.createdCount === 0 ? "error" : "success",
+            }));
+          })
+          .catch(() => {
+            setStatusMap((map) => ({ ...map, [asin]: "error" }));
+          });
+      })
+    );
+
     setLoading(false);
-    mutate("/api/products");
-    handleResultOpen();
-    setText("");
+    setIsDone(true);
   };
 
   return (
-    <>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Insert Products</DialogTitle>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>Insert Products</DialogTitle>
 
-        <DialogContent>
-          <DialogContentText>
-            Please sort down the ASIN (Amazon Standard Identification Number)
-            codes of the products line by line into the text field below.
-          </DialogContentText>
+      <DialogContent>
+        <DialogContentText>
+          {isSubmitting
+            ? `Please wait while products are being inserted...`
+            : `Please sort down the ASIN (Amazon Standard Identification Number)
+               codes of the products line by line into the text field below.`}
+        </DialogContentText>
 
+        {isSubmitting ? (
+          <ProductInsertionLoadingTable statusMap={statusMap} />
+        ) : (
           <TextField
             autoFocus
             margin="normal"
@@ -79,43 +114,19 @@ export default function ProductInsertionDialog({
             variant="filled"
             fullWidth
             multiline
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            value={asinText}
+            onChange={(e) => setAsinText(e.target.value)}
           />
-        </DialogContent>
+        )}
+      </DialogContent>
 
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Insert</Button>
-        </DialogActions>
-      </Dialog>
+      <DialogActions>
+        <Button onClick={handleClose}>
+          {isSubmitting ? "Exit" : "Cancel"}
+        </Button>
 
-      <Dialog open={resultOpen} onClose={handleResultClose} fullWidth={true}>
-        <DialogTitle>Product Insertion Result</DialogTitle>
-
-        <DialogContent>
-          <DialogContentText marginBottom="1rem">
-            {result?.createdCount} products out of the total {asinCount} entered
-            products have been inserted!
-          </DialogContentText>
-
-          <Grid
-            container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Grid item>
-              <DoneAllIcon color="success" sx={{ width: 128, height: 128 }} />
-            </Grid>
-          </Grid>
-        </DialogContent>
-
-        <DialogActions>
-          <Button onClick={handleResultClose}>Exit</Button>
-        </DialogActions>
-      </Dialog>
-    </>
+        {!isSubmitting && <Button onClick={handleSubmit}>Insert</Button>}
+      </DialogActions>
+    </Dialog>
   );
 }
