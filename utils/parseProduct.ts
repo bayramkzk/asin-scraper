@@ -25,7 +25,7 @@ function parseElementText(dom: JSDOM, selector: string): string | undefined {
 }
 
 export function parseProductComPrice(domCom: JSDOM): number | undefined {
-  const selector = ".a-price.a-text-price :first-child";
+  const selector = ".priceToPay .a-offscreen";
   return parseNumber(parseElementText(domCom, selector)?.slice(1));
 }
 
@@ -55,13 +55,13 @@ export function parseProductRating(domCom: JSDOM): number | undefined {
 
 export function parseProductShippingCost(domCom: JSDOM): number | undefined {
   const sel =
-    "#a-popover-agShipMsgPopover > table > tbody > tr:nth-child(2) > td.a-span2.a-text-right > span";
+    ".a-lineitem > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(3) > span:nth-child(1)";
   return parseNumber(parseElementText(domCom, sel)?.slice(1));
 }
 
 export function parseProductImportFee(domCom: JSDOM): number | undefined {
   const sel =
-    "#a-popover-agShipMsgPopover > table > tbody > tr:nth-child(3) > td.a-span2.a-text-right > span";
+    ".a-lineitem > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(3) > span:nth-child(1)";
   return parseNumber(parseElementText(domCom, sel)?.slice(1));
 }
 
