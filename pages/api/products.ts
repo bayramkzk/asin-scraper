@@ -3,6 +3,7 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import ApiContext from "@/types/ApiContext";
 import deleteProducts from "@/utils/deleteProducts";
 import getProducts from "@/utils/getProducts";
+import patchProduct from "@/utils/patchProduct";
 import postProducts from "@/utils/postProducts";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth";
@@ -14,6 +15,7 @@ export default async function handler(
   if (
     req.method !== "POST" &&
     req.method !== "GET" &&
+    req.method !== "PATCH" &&
     req.method !== "DELETE"
   ) {
     return res.status(404).json({ error: "Undefined method" });
@@ -40,6 +42,8 @@ export default async function handler(
       return await postProducts(context);
     case "GET":
       return await getProducts(context);
+    case "PATCH":
+      return await patchProduct(context);
     case "DELETE":
       return await deleteProducts(context);
   }
