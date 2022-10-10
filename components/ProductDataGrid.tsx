@@ -5,59 +5,90 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Container from "@mui/material/Container";
 import LinearProgress from "@mui/material/LinearProgress";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridCellEditStopParams, GridColDef } from "@mui/x-data-grid";
 import React from "react";
 import { useSWRConfig } from "swr";
 import ProductExportButton from "./ProductExportButton";
 import ProductInsertionDialog from "./ProductInsertionDialog";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", type: "number", width: 100 },
-  { field: "asin", headerName: "ASIN", type: "string", width: 200 },
-  { field: "aePrice", headerName: "AE Price (AE)", type: "number", width: 200 },
+  { field: "id", headerName: "ID", type: "number", width: 100, editable: true },
+  {
+    field: "asin",
+    headerName: "ASIN",
+    type: "string",
+    width: 200,
+    editable: true,
+  },
+  {
+    field: "aePrice",
+    headerName: "AE Price (AE)",
+    type: "number",
+    width: 200,
+    editable: true,
+  },
   {
     field: "aedToDollar",
     headerName: "AE Price (US)",
     type: "number",
     width: 200,
+    editable: true,
   },
-  { field: "rate", headerName: "Rate", type: "number", width: 200 },
-  { field: "rating", headerName: "Rating", type: "number", width: 200 },
+  {
+    field: "rate",
+    headerName: "Rate",
+    type: "number",
+    width: 200,
+    editable: true,
+  },
+  {
+    field: "rating",
+    headerName: "Rating",
+    type: "number",
+    width: 200,
+    editable: true,
+  },
   {
     field: "comPrice",
     headerName: "COM Price (USD)",
     type: "number",
     width: 200,
+    editable: true,
   },
   {
     field: "shippingCost",
     headerName: "COM Shipping Cost to AE (USD)",
     type: "number",
     width: 300,
+    editable: true,
   },
   {
     field: "importFee",
     headerName: "COM Import Fee (USD)",
     type: "number",
     width: 250,
+    editable: true,
   },
   {
     field: "totalPrice",
     headerName: "COM Total Price (USD)",
     type: "number",
     width: 250,
+    editable: true,
   },
   {
     field: "comRank",
     headerName: "COM Seller Rank Info",
     type: "string",
     width: 750,
+    editable: true,
   },
   {
     field: "soldBy",
     headerName: "Sold By",
     type: "string",
     width: 250,
+    editable: true,
   },
   { field: "createdAt", headerName: "Creation Date", type: "date", width: 250 },
 ];
@@ -83,6 +114,36 @@ export default function ProductDataGrid() {
     const body = { idList: selection };
     await fetch("/api/products", {
       method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }).then((res) => res.json());
+
+    mutate("/api/products");
+    setMutationLoading(false);
+  };
+
+  const handleEdit = async (
+    params: GridCellEditStopParams,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setMutationLoading(true);
+    const type = columns.find((col) => col.field === params.field)!.type;
+    const value =
+      type === "number"
+        ? Number(event.target.value)
+        : event.target.value === "date"
+        ? new Date(event.target.value)
+        : event.target.value;
+
+    const body = {
+      id: params.id,
+      data: { [params.field]: value },
+    };
+    await fetch("/api/products", {
+      method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -144,6 +205,14 @@ export default function ProductDataGrid() {
           loading={mutationLoading}
           selectionModel={selection}
           onSelectionModelChange={(sel) => setSelection(sel.map(Number))}
+          experimentalFeatures={{ newEditingApi: true }}
+          // @ts-ignore: mui type problem
+          onCellEditStop={handleEdit}
+          initialState={{
+            sorting: {
+              sortModel: [{ field: "id", sort: "asc" }],
+            },
+          }}
         />
 
         <ProductInsertionDialog
