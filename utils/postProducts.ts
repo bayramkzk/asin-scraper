@@ -16,14 +16,14 @@ export async function fetchProductContext(
 
   const [htmlCom, htmlAe, htmlAeDollar] = await Promise.all([
     fetch(`https://www.amazon.com/dp/${asin}`, {
-      headers: { Cookie: process.env.AMAZON_COM_COOKIE as string, ...headers },
+      headers: { cookie: process.env.AMAZON_COM_COOKIE as string, ...headers },
     }).then((res) => res.text()),
     fetch(`https://www.amazon.ae/dp/${asin}?language=en_AE&currency=AED`, {
       headers,
     }).then((res) => res.text()),
     fetch(`https://www.amazon.ae/dp/${asin}?language=en_AE&currency=USD`, {
       headers: {
-        Cookie: process.env.AMAZON_AE_DOLLAR_COOKIE as string,
+        cookie: process.env.AMAZON_AE_DOLLAR_COOKIE as string,
         ...headers,
       },
     }).then((res) => res.text()),
