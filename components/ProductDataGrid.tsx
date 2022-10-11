@@ -127,9 +127,11 @@ export default function ProductDataGrid() {
 
   const handleEdit = async (
     params: GridCellEditStopParams,
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.KeyboardEvent<HTMLInputElement>
   ) => {
-    setMutationLoading(true);
+    // if enter is not pressed, do nothing
+    if (event.key !== "Enter") return;
+
     const type = columns.find((col) => col.field === params.field)!.type;
     const value =
       type === "number"
@@ -137,6 +139,8 @@ export default function ProductDataGrid() {
         : event.target.value === "date"
         ? new Date(event.target.value)
         : event.target.value;
+    if (value === "" || value === params.row[params.field]) return;
+    setMutationLoading(true);
 
     const body = {
       id: params.id,
