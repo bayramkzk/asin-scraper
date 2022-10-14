@@ -104,7 +104,7 @@ export default function parseProductHtml(ctx: ProductContext): ProductData {
   const comRank = parseProductComRank(domCom);
   const soldBy = parseProductSoldBy(domCom);
 
-  return {
+  const product: ProductData = {
     asin,
     aePrice,
     aedToDollar,
@@ -117,4 +117,8 @@ export default function parseProductHtml(ctx: ProductContext): ProductData {
     comRank,
     soldBy,
   };
+
+  console.log(product);
+
+  return product;
 }
