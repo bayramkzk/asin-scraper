@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import ApiContext from "@/types/ApiContext";
 import ProductData from "@/types/Product";
 import ProductContext from "@/types/ProductContext";
-import parseProductHtml from "./parseProduct";
+import parseAndLogProductHtml from "./parseAndLogProduct";
 
 export interface PostProductsResult {
   data: PromiseSettledResult<ProductData>[];
@@ -41,7 +41,9 @@ export default async function postProducts({ req, res, session }: ApiContext) {
 
   const settledProducts = await Promise.allSettled(
     asinCodes.map((asin) =>
-      fetchProductContext(asin).then(parseProductHtml).catch(console.error)
+      fetchProductContext(asin)
+        .then(parseAndLogProductHtml)
+        .catch(console.error)
     )
   );
 
