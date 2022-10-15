@@ -1,6 +1,5 @@
 import ProductData from "@/types/Product";
 import ProductContext from "@/types/ProductContext";
-import fs from "fs";
 import { JSDOM } from "jsdom";
 
 function findElementByText(dom: JSDOM, sel: string, text: string) {
@@ -89,10 +88,6 @@ export function parseProductSoldBy(domCom: JSDOM): string | undefined {
 
 export default function parseProductHtml(ctx: ProductContext) {
   const { htmlCom, htmlAe, htmlAeDollar, asin } = ctx;
-
-  fs.writeFileSync(`./html/${asin}-com.html`, htmlCom);
-  fs.writeFileSync(`./html/${asin}-ae.html`, htmlAe);
-  fs.writeFileSync(`./html/${asin}-ae-dollar.html`, htmlAeDollar);
 
   const domCom = new JSDOM(htmlCom);
   const domAe = new JSDOM(htmlAe);
