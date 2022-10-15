@@ -51,3 +51,13 @@ model Product {
 
   @@map("products")
 }
+
+model ProductHtmlLog {
+  asin         String   @id @db.VarChar(10)
+  htmlCom      String   @map("html_com")
+  htmlAe       String   @map("html_ae")
+  htmlAeDollar String   @map("html_ae_dollar")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@map("product_html_log")
+}
