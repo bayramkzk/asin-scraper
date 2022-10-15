@@ -121,10 +121,6 @@ export default function parseProductHtml(ctx: ProductContext) {
     totalPrice,
     comRank,
     soldBy,
-
-    htmlCom,
-    htmlAe,
-    htmlAeDollar,
   };
 
   console.log(product);
