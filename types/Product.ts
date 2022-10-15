@@ -10,4 +10,9 @@ export default interface ProductData {
   totalPrice?: number;
   comRank?: string;
   soldBy?: string;
+
+  // FIXME: remove these temporary fields
+  htmlCom: string;
+  htmlAe: string;
+  htmlAeDollar: string;
 }

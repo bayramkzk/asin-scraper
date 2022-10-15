@@ -86,7 +86,7 @@ export function parseProductSoldBy(domCom: JSDOM): string | undefined {
   return parseElementText(domCom, sel);
 }
 
-export default function parseProductHtml(ctx: ProductContext): ProductData {
+export default function parseProductHtml(ctx: ProductContext) {
   const { htmlCom, htmlAe, htmlAeDollar, asin } = ctx;
 
   const domCom = new JSDOM(htmlCom);
@@ -116,6 +116,10 @@ export default function parseProductHtml(ctx: ProductContext): ProductData {
     totalPrice,
     comRank,
     soldBy,
+
+    htmlCom,
+    htmlAe,
+    htmlAeDollar,
   };
 
   console.log(product);
