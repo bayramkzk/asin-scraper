@@ -1,3 +1,5 @@
+import LogoLabelDesktop from "@/components/LogoLabelDesktop";
+import LogoLabelMobile from "@/components/LogoLabelMobile";
 import RhfTextField from "@/components/RhfTextField";
 import { Alert } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -55,14 +57,35 @@ export default function SignInPage() {
           width: "24rem",
           gap: "2rem",
           padding: "1.5rem",
+          position: "relative",
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
+        <Paper
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "calc(100% - 2rem)",
+            padding: "1rem",
+            background: "#444",
+            borderRadius: "5rem",
+            position: "absolute",
+            top: 0,
+            transform: "translateY(-50%)",
+            left: "1rem",
+            right: "1rem",
+          }}
+        >
+          <LogoLabelDesktop />
+        </Paper>
+
         <Typography
           variant="h4"
           fontWeight={700}
           textAlign="center"
           marginBottom={2}
+          marginTop={5}
         >
           Sign In
         </Typography>
