@@ -62,13 +62,13 @@ export default function SignInPage() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Paper
+        elevation={3}
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             width: "calc(100% - 2rem)",
             padding: "1rem",
-            background: "#444",
             borderRadius: "5rem",
             position: "absolute",
             top: 0,
